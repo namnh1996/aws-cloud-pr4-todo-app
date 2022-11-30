@@ -7,7 +7,7 @@ import * as uuid from 'uuid'
 // import * as createError from 'http-errors'
 import { APIGatewayProxyEvent } from 'aws-lambda'
 import { getUserId } from '../lambda/utils'
-import { getTodosByUserId} from './todosAcess'
+import { getTodosByUserId } from '../datalayer/todosAcess'
 // // TODO: Implement businessLogic
 
 export async function getTodosUser(userId: string) {
@@ -46,7 +46,6 @@ export async function updateTodo(
     todoId
   )
 }
-
 
 export async function deleteTodo(todoId: string, userId: string) {
   return await deleteTodo(todoId, userId)

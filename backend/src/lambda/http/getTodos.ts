@@ -3,7 +3,7 @@ import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import * as middy from 'middy'
 import { cors } from 'middy/middlewares'
-import { getTodosByUserId } from '../../helpers/todosAcess'
+import { getTodosByUserId } from '../../datalayer/todosAcess'
 
 //import { getTodosForUser as getTodosForUser } from '../../businessLogic/todos'
 import { getUserId } from '../utils'
@@ -15,7 +15,7 @@ export const handler = middy(
     const todos = await getTodosByUserId(getUserId(event))
     return {
       statusCode: 201,
-      body: JSON.stringify({items: todos})
+      body: JSON.stringify({ items: todos })
     }
   }
 )
