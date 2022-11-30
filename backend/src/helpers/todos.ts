@@ -1,16 +1,23 @@
-// import { TodosAccess } from './todosAcess'
 // import { AttachmentUtils } from './attachmentUtils';
 import { TodoItem } from '../models/TodoItem'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
-// import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
+import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 // import { createLogger } from '../utils/logger'
 import * as uuid from 'uuid'
 // import * as createError from 'http-errors'
 import { APIGatewayProxyEvent } from 'aws-lambda'
 import { getUserId } from '../lambda/utils'
-
+import { getTodosByUserId} from './todosAcess'
 // // TODO: Implement businessLogic
-export function todoBuilder(todoRequest: CreateTodoRequest, event: APIGatewayProxyEvent) : TodoItem  {
+
+export async function getTodosUser(userId: string) {
+  return await getTodosByUserId(userId)
+}
+
+export function todoBuider(
+  createTodoRequest: CreateTodoRequest,
+  event: APIGatewayProxyEvent
+): TodoItem {
   const todoId = uuid.v4()
   const todo = {
     todoId: todoId,
@@ -18,7 +25,29 @@ export function todoBuilder(todoRequest: CreateTodoRequest, event: APIGatewayPro
     createdAt: new Date().toISOString(),
     done: false,
     attachmentUrl: '',
-    ...todoRequest
+    name: createTodoRequest.name,
+    dueDate: createTodoRequest.dueDate
   }
-  return todo as TodoItem;
+  return todo as TodoItem
+}
+
+export async function updateTodo(
+  updateTodoRequest: UpdateTodoRequest,
+  userId: string,
+  todoId: string
+) {
+  return await updateTodo(
+    {
+      name: updateTodoRequest.name,
+      dueDate: updateTodoRequest.dueDate,
+      done: updateTodoRequest.done
+    },
+    userId,
+    todoId
+  )
+}
+
+
+export async function deleteTodo(todoId: string, userId: string) {
+  return await deleteTodo(todoId, userId)
 }

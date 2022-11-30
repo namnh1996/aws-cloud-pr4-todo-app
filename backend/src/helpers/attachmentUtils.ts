@@ -5,13 +5,13 @@ const XAWS = AWSXRay.captureAWS(AWS)
 const s3 = new XAWS.S3({
   signatureVersion: 'v4'
 })
-const bucketname = process.env.ATTACHMENT_S3_BUCKET
+const namdev96_s3_bucket = process.env.ATTACHMENT_S3_BUCKET
 
 // // TODO: Implement the fileStogare logic
 
-export function getUploadUrl(imageId: string) {
+export function getUploadImageUrl(imageId: string) {
   return s3.getSignedUrl('putObject', {
-    Bucket: bucketname,
+    Bucket: namdev96_s3_bucket,
     Key: imageId,
     Expires: 300
   })

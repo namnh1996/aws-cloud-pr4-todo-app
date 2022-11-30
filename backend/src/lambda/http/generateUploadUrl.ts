@@ -6,7 +6,7 @@ import { cors, httpErrorHandler } from 'middy/middlewares'
 import { getTodoById } from '../../helpers/todosAcess'
 import {  updateTodo } from '../../helpers/todosAcess'
 
-import { getUploadUrl } from '../../helpers/attachmentUtils'
+import { getUploadImageUrl } from '../../helpers/attachmentUtils'
 const bucketname = process.env.ATTACHMENT_S3_BUCKET
 //import { createAttachmentPresignedUrl } from '../../businessLogic/todos'
 //import { getUserId } from '../utils'
@@ -19,7 +19,7 @@ export const handler = middy(
 
     await updateTodo(todo)
 
-    const url = await getUploadUrl(todoId)
+    const url = await getUploadImageUrl(todoId)
     // TODO: Return a presigned URL to upload a file for a TODO item with the provided id
 
     return {
