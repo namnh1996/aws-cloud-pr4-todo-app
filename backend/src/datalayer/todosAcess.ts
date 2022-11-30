@@ -40,25 +40,6 @@ export async function getTodosByUserId(userId: string): Promise<TodoItem[]> {
   return result.Items as TodoItem[]
 }
 
-// export async function getTodoByIdForUser(
-//   userId: string,
-//   todoId: string
-// ): Promise<TodoItem> {
-//   const result = await this.docClient
-//     .query({
-//       TableName: this.todosTable,
-//       KeyConditionExpression: 'userId = :userId AND todoId = :todoId',
-//       ExpressionAttributeValues: {
-//         ':userId': userId,
-//         ':todoId': todoId
-//       }
-//     })
-//     .promise()
-
-//   const items = result.Items
-//   return items[0] as TodoItem
-// }
-
 export async function getTodoById(todoId: string): Promise<TodoItem> {
   logger.info('get todo by id')
   const result = await docClient
